@@ -1,3 +1,4 @@
+# ************** DEMONSTRATION PURPOSE ONLY ************** 
 # Mock backend for the compression algorithm
 
 def compression(char_list={}):
