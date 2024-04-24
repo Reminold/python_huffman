@@ -1,10 +1,9 @@
 import tkinter as tk
-import numpy as np
 from tkinter import filedialog
 
 # Sugerencia: Importar las funciones del backend
 # Estas funciones se les proporcionan a los botones de la interfaz
-from backend import compression, decompression
+from mock_backend import compression, decompression
 
 # Definimos la clase para nuestra interfaz grafica
 class Interface:
@@ -25,6 +24,10 @@ class Interface:
     self.set_dimensions(width, height)
     self.generate_elements()
 
+    # Mantenemos la ventana abierta
+    self.window.mainloop()
+
+
   def set_dimensions(self, width, height):
     # Obtenemos las dimensiones de la pantalla
     screen_width = self.window.winfo_screenwidth()
@@ -37,9 +40,6 @@ class Interface:
     # Se inicializa las dimensiones de la pantalla y su posicion
     self.window.geometry(f"{width}x{height}+{x_position}+{y_position}")
 
-  def show_interface(self):
-    self.window.mainloop()
-  
   def generate_elements(self):
     # Se agrega la etiqueta con el titulo de programa
     label = tk.Label(self.window, text="Huffman Compression Algorithm", font=("Comic Sans MS", 30), bg="#3296C8", fg="white")
@@ -101,14 +101,9 @@ class Interface:
       else:
         self.char_count[char] = 1
     
-    # Se borra el texto anterior y se actualiza la cuenta de caracteres
+    # Se borra el texto anterior en el widget de texto
     self.text.delete(1.0, tk.END)
-    self.update_char_count()
 
-    # Se habilita el boton de compresion
-    self.compress_button.config(state="normal")
-  
-  def update_char_count(self):
     # Se crea el diccionario con los valores ordenados y se sobreescribe
     sorted_char_count = dict(sorted(self.char_count.items(), key=lambda item: item[1], reverse=True))
     self.char_count = sorted_char_count
@@ -116,6 +111,9 @@ class Interface:
     # Actualizamos el objeto texto de la interfaz con la cuenta actualizada
     for c, i in self.char_count.items():
       self.text.insert(tk.END, f"{c}: {i}\n")
+
+    # Se habilita el boton de compresion
+    self.compress_button.config(state="normal")
+  
     
 my_interface = Interface()
-my_interface.show_interface()
